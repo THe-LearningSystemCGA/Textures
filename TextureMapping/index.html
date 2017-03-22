@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+
+<html lang="de-de">
+<head>
+    <meta charset="utf-8" />
+    <title>TH Köln | CG-Learning | Texture-Mapping</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700,500|Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="css/reset.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/polyfills/requestAnimationFrame.js"></script>
+    <script src="js/polyfills/addWheelListener.js"></script>
+    <script src="js/three-r73.min.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        var app;
+        
+        /**Wird ausgeführt wenn das DOM vollständig geladen worden ist*/
+        $(document).ready(function ()
+        {
+            var wrapSMode = $('#toolbar input[name=wrapS]:checked').val();
+            var wrapTMode = $('#toolbar input[name=wrapT]:checked').val();
+            var vertexSnapping = ($('#toolbar input[name=snap]:checked').length == 0)?false:true;
+            var object3DMode = $('#app .comboBox').val();
+
+            var magFilter = $('#filterControlContainer input[name=magFilter]:checked').val();
+            var minFilter = $('#filterControlContainer input[name=minFilter]:checked').val();
+            var anisotropic = parseInt($('#filterControlContainer input[name=minFilter]:checked').val());
+
+            app = new App(
+                document.getElementById('uvEditor'),
+                document.getElementById('view3D'),
+                $('#textureSelectContainer img').toArray(),
+                wrapSMode,
+                wrapTMode,
+                object3DMode,
+                vertexSnapping,
+                magFilter,
+                minFilter,
+                anisotropic
+            );
+        });
+    </script>
+</head>
+
+<body>
+    <div id="mainContainer">
+
+        <!--Header-->
+
+        <div id="header">
+            <img src="images/logo_THKoeln.png" style="float:right" />
+            <h1 style="font-size:24px; font-weight:400; margin-bottom:0; line-height:1.5em;">
+                CG - Learning<br />
+                <span style="color:#888; font-size:32px; font-weight:400; margin-bottom:0">Texture-Mapping</span>
+            </h1>
+        </div>
+
+
+        <!--App-->
+
+        <div id="app">
+            <div id="toolbar">
+                <span>Wrap S</span>
+                <input id="buttonWrapSRepeat" onchange="app.SetWrapSMode(this.value);" title="Wrap-S Repeat" type="radio" name="wrapS" value="repeat" />
+                <label for="buttonWrapSRepeat" title="Wrap-S Repeat"></label>
+                <input id="buttonWrapSClamp" onchange="app.SetWrapSMode(this.value);" title="Wrap-S Clamp" type="radio" name="wrapS" value="clamp" checked="checked" />
+                <label for="buttonWrapSClamp" title="Wrap-S Clamp"></label>
+
+                <span>Wrap T</span>
+                <input id="buttonWrapTRepeat" onchange="app.SetWrapTMode(this.value);" title="Wrap-T Repeat" type="radio" name="wrapT" value="repeat" />
+                <label for="buttonWrapTRepeat" title="Wrap-T Repeat"></label>
+                <input id="buttonWrapTClamp" onchange="app.SetWrapTMode(this.value);" title="Wrap-T Clamp" type="radio" name="wrapT" value="clamp" checked="checked" />
+                <label for="buttonWrapTClamp" title="Wrap-T Clamp"></label>
+
+                <span>Snap</span>
+                <input id="buttonSnap" onchange="app.SwitchVertexSnapping();" title="Raster-Ausrichtung" type="checkbox" name="snap" value="snap" />
+                <label for="buttonSnap" title="Snap during Vertex-Transform"></label>
+
+                <input id="buttonReset" onclick="app.ResetUVCoordinates();" title="Reset UV-Coordinates" type="button" />
+            </div>
+
+            <div id="uvEditor">
+            </div>
+
+            <div id="view3D">
+            </div>
+
+            <div id="comboBoxContainer">
+                <span>3D-Object&nbsp;&nbsp;</span>
+                <select class="comboBox" onchange="app.SetObject3DMode(this.value);">
+                    <option value="cube">Cube</option>
+                    <option value="triangle">Triangle</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!--Content-->
+
+        <div id="content">
+            <div id="textureSelectContainer">
+                <h2>Texture Selection</h2>
+                <img src="images/texture1_checker.png" />
+                <img src="images/texture2_fanLines.png" />
+                <img src="images/texture3_grid.png" />
+                <img src="images/texture4_worldMap.png" />
+                <img src="images/texture5_desertGround.png" />
+                <img src="https://unsplash.it/512/512/?random" crossorigin="Anonymous" />
+            </div>
+
+            <div id="filterControlContainer">
+                <h2>Filter Control</h2>
+                <table>
+                    <tr>
+                        <td>Magnification Filter</td>
+                        <td>
+                            <input id="buttonMagFilterNearest" onchange="app.SetMagFilter(this.value);" type="radio" name="magFilter" value="nearest" checked="checked" />
+                            <label for="buttonMagFilterNearest">nearest</label>
+                            <input id="buttonMagFilterLinear" onchange="app.SetMagFilter(this.value);" type="radio" name="magFilter" value="linear" />
+                            <label for="buttonMagFilterLinear">linear</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Minification Filter</td>
+                        <td>
+                            <input id="buttonMinFilterNearest" onchange="app.SetMinFilter(this.value);" type="radio" name="minFilter" value="nearest" checked="checked" />
+                            <label for="buttonMinFilterNearest">nearest</label>
+                            <input id="buttonMinFilterLinear" onchange="app.SetMinFilter(this.value);" type="radio" name="minFilter" value="linear" />
+                            <label for="buttonMinFilterLinear">linear</label>                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td id="mipmapTypeTD">
+                            <input id="buttonMinFilterNMipmapN" onchange="app.SetMinFilter(this.value);" type="radio" name="minFilter" value="nmmn" />
+                            <label for="buttonMinFilterNMipmapN" title="Nearest_Mipmap_Nearest">N_MM_N</label>
+                            <input id="buttonMinFilterNMipmapL" onchange="app.SetMinFilter(this.value);" type="radio" name="minFilter" value="nmml" />
+                            <label for="buttonMinFilterNMipmapL" title="Nearest_Mipmap_Linear">N_MM_L</label>
+                            <input id="buttonMinFilterLMipmapN" onchange="app.SetMinFilter(this.value);" type="radio" name="minFilter" value="lmmn" />
+                            <label for="buttonMinFilterLMipmapN" title="Linear_Mipmap_Nearest">L_MM_N</label>
+                            <input id="buttonMinFilterLMipmapL" onchange="app.SetMinFilter(this.value);" type="radio" name="minFilter" value="lmml" />
+                            <label for="buttonMinFilterLMipmapL" title="Linear_Mipmap_Linear">L_MM_L</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Anisotropic Filter</td>
+                        <td>
+                            <input id="buttonAnisotropicNo" onchange="app.SetAnisotropic(parseInt(this.value));" type="radio" name="anisotropic" value="0" checked="checked" />
+                            <label for="buttonAnisotropicNo">No</label>
+                            <input id="buttonAnisotropic2x" onchange="app.SetAnisotropic(parseInt(this.value));" type="radio" name="anisotropic" value="2" />
+                            <label for="buttonAnisotropic2x">2x</label>
+                            <input id="buttonAnisotropic4x" onchange="app.SetAnisotropic(parseInt(this.value));" type="radio" name="anisotropic" value="4" />
+                            <label for="buttonAnisotropic4x">4x</label>
+                            <input id="buttonAnisotropic8x" onchange="app.SetAnisotropic(parseInt(this.value));" type="radio" name="anisotropic" value="8" />
+                            <label for="buttonAnisotropic8x">8x</label>
+                            <input id="buttonAnisotropic16x" onchange="app.SetAnisotropic(parseInt(this.value));" type="radio" name="anisotropic" value="16" />
+                            <label for="buttonAnisotropic16x">16x</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="footer">
+            Author: Jarek Sarbiewski
+        </div>
+
+    </div>
+</body>
+</html>

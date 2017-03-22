@@ -1,0 +1,344 @@
+﻿::-moz-selection {background: #67d8ff;}
+::selection {background: #67d8ff; }
+
+body {
+    font-family:'Roboto', 'Segoe UI', sans-serif;
+    font-weight:400;
+    font-size:14px;
+    line-height:1.3em;
+    color:#333;
+    background-color:#ededed;
+    background: transparent linear-gradient(to bottom, #f0f0f0 1px, #B4B4B4 2000px) repeat scroll 0 0;
+}
+
+.condensed {
+    font-family: 'Roboto Condensed', 'Segoe UI', sans-serif;
+}
+
+
+h1, h2, h3 {
+    font-family: 'Roboto Condensed', 'Segoe UI', sans-serif;
+    font-weight: 700;
+    margin: 0 0 0.4em 0;
+    line-height: 1.2em;
+    color:#444;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size:21px;
+}
+
+h3 {
+    font-size:18px;
+}
+
+p {
+    margin: 0 0 0.4em 0;
+}
+
+strong {
+    font-weight:700;
+    color:#444;
+}
+
+em{
+    text-transform:uppercase;
+    font-size:17px;
+    margin: 0 0 0.4em 0;
+}
+
+.caption{
+    font-size:12px;
+    font-weight:300;
+    color:#666;
+}
+
+#mainContainer{
+    width:960px;
+    height:100%;
+    margin:0 auto;
+}
+
+
+/*Header*/
+
+#header {
+    width: 960px;
+    padding: 20px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color:white;
+    overflow:hidden;
+}
+
+
+/*Application*/
+
+#app {
+    position:relative;
+    width:960px;
+    height:500px;
+    margin-top:50px;
+    background-color:#ccc;
+    border-top:1px solid #fff;
+    border-bottom:1px solid #ccc;
+    overflow:hidden;
+}
+
+#toolbar{
+    position:relative;
+    float:left;
+    width:50px;
+    border-left:1px #fff solid;
+    border-right:1px #fff solid;
+    height:500px;
+    background-image:url(../images/toolbarBG.png);
+    background-repeat:repeat-y;
+    z-index:30;
+}
+
+#toolbar span{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    /*font-weight:700;*/
+    margin: 10px 0 5px 0;
+}
+
+#toolbar input[type=button],
+#toolbar input[type=file],
+#toolbar input[type=radio ] + label,
+#toolbar input[type=checkbox] + label{
+    display:block;
+    width:49px;
+    height:60px;
+    border:none;
+    background-color:transparent;
+    cursor:pointer;
+    padding:0;
+}
+
+#toolbar input[type=radio],
+#toolbar input[type=checkbox]{
+    display:none;
+}
+
+#buttonWrapSRepeat + label {
+    background-image: url('../images/buttonWrapSRepeat.png');
+    background-position:-49px 0;
+}
+
+#buttonWrapSRepeat:checked + label {
+    background-position:0 0;
+}
+
+#buttonWrapSClamp + label {
+    background-image: url('../images/buttonWrapSClamp.png');
+    background-position:-49px 0;
+}
+
+#buttonWrapSClamp:checked + label {
+    background-position:0 0;
+}
+
+#buttonWrapTRepeat + label {
+    background-image: url('../images/buttonWrapTRepeat.png');
+    background-position:-49px 0;
+}
+
+#buttonWrapTRepeat:checked + label {
+    background-position:0 0;
+}
+
+#buttonWrapTClamp + label {
+    background-image: url('../images/buttonWrapTClamp.png');
+    background-position:-49px 0;
+}
+
+#buttonWrapTClamp:checked + label {
+    background-position:0 0;
+}
+
+#buttonSnap + label {
+    background-image: url('../images/buttonSnap.png');
+    background-position: 0 0;
+}
+
+#buttonSnap:checked + label {
+    background-position:-49px 0;
+}
+
+
+#toolbar #buttonReset{
+    position:absolute;
+    bottom:0px;
+    border-top:1px #aaa dotted;
+    background-color: rgba(255,255,255,0.3);
+    background-image: url('../images/buttonReset.png');
+}
+
+
+#uvEditor{
+    float:left;
+    width:428px;
+    height:500px;
+}
+
+    #uvEditor .uvVertex {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #d8d8d8;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        cursor: pointer;
+        color: #eee;
+        text-align: center;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+#view3D {
+    float: left;
+    width: 480px;
+    height: 500px;
+    background-color: #bbb;
+    cursor: url(../images/cursor3DRotate.png), default;
+}
+
+#comboBoxContainer{
+    position:absolute;
+    top:10px;
+    right:10px;
+}
+
+#comboBoxContainer .comboBox{
+    font-family:'Roboto', 'Segoe UI', sans-serif;
+    padding:3px 5px;
+}
+
+/*#comboBoxContainer span{
+    font-weight:700;
+}*/
+
+
+/*Content*/
+
+#content {
+    width: 100%;
+    background-color: white;
+    padding: 0 0 30px 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow:hidden;
+}
+
+/*textureSelectContainer*/
+#textureSelectContainer {
+    float:left;
+    width:50%;
+    padding: 20px ;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+    #textureSelectContainer img {
+        float:left;
+        width:20%;
+        border:3px solid #6cbad5;
+        border-color:transparent;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+
+/*filterControlContainer*/
+
+#filterControlContainer {
+    float:left;
+    width:50%;
+    padding: 20px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#filterControlContainer table td{
+    padding:6px 0;
+}
+
+#filterControlContainer table td:first-child{
+    font-family:'Roboto Condensed', 'Segoe UI', sans-serif;
+    font-size:16px;
+    font-weight:700;
+    padding-right:12px;
+    vertical-align:middle;
+}
+
+#filterControlContainer input{
+    display:none;
+}
+
+    #filterControlContainer label {
+        display: block;
+        float:left;
+        padding: 3px 7px;
+        margin-left:-1px;
+        border: 1px solid;
+        border-color: #ddd #bbb #bbb #ddd;
+        cursor:pointer;
+        background-image:url('../images/filterControlRadioButtonsBG.png');
+        background-repeat:repeat-x;
+    }
+
+    #filterControlContainer #mipmapTypeTD{
+        padding-top:0;
+    }
+
+    #filterControlContainer #mipmapTypeTD label{
+        font-size:12px;
+    }
+
+    #filterControlContainer input:checked + label{
+        background-position:0 -28px;
+        border-color: #bbb #ddd #ddd #bbb;
+        color:#50b4d9;
+    }
+
+    #filterControlContainer label:first-of-type{
+        border-radius: 6px 0 0 6px;
+    }
+
+    #filterControlContainer label:last-of-type{
+        border-radius: 0 6px 6px 0;
+    }
+
+
+/*Footer*/
+
+#footer{
+    width: 100%;
+    min-height:116px;
+    background-color: #808080;
+    padding: 20px;
+    margin-top:50px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color:white;
+}
+
+
+
+
